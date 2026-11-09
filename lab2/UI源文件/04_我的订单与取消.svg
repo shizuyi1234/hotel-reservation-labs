@@ -69,4 +69,12 @@
 <rect x="991" y="655" width="178" height="40" rx="8" fill="#FFFFFF" stroke="#EAB8BF"/>
 <text x="1080.0" y="681" font-size="16" fill="#A02D3E" font-weight="700" text-anchor="middle">取消预订…</text>
 <text x="801" y="740" font-size="15" fill="#536973" font-weight="400" text-anchor="start">状态记录  ·  11 月 9 日 20:00 创建订单，进入待确认。</text>
+<rect x="274" y="730" width="480" height="160" rx="12" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="297" y="758" font-size="13" fill="#536973">点击「取消预订…」后的确认窗口</text>
+<text x="297" y="787" font-size="19" fill="#172E37" font-weight="700">确认取消 Q261109018？</text>
+<text x="297" y="813" font-size="14" fill="#536973">取消后将释放尚未使用的预留房间。</text>
+<rect x="443" y="833" width="127" height="36" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="507" y="857" font-size="15" fill="#096B60" text-anchor="middle">保留订单</text>
+<rect x="582" y="833" width="147" height="36" rx="8" fill="#A02D3E"/>
+<text x="656" y="857" font-size="15" fill="#FFFFFF" font-weight="700" text-anchor="middle">确认取消</text>
 </svg>

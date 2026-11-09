@@ -21,10 +21,11 @@ state "已超时" as Expired
 Pending --> Confirmed : 本店确认\n[未到期且订单未受限制]
 Pending --> Rejected : 本店拒单 [未到期]\n/ 记录原因并释放未用占用
 Pending --> Expired : 达到确认截止\n/ 释放未用占用
-Pending --> Cancelled : 顾客取消 [未到期且原入住日前]\n/ 释放未用占用
-Confirmed --> Cancelled : 合规取消或达到退房日 12:00 仍未到店\n/ 记录原因并释放未用占用
-Pending --> Pending : 顾客修改 [未到期且原入住日前]\n/ 替换占用及报价，递增版本并重计时
-Confirmed --> Pending : 顾客修改 [原入住日前]\n/ 替换占用及报价，递增版本并重计时
+Pending --> Cancelled : 顾客取消 [未到期且可改退]\n/ 释放未用占用
+Confirmed --> Cancelled : 顾客取消 [可改退]\n/ 释放未用占用
+Confirmed --> Cancelled : 未到店 [达到退房日 12:00]\n/ 记录未到店原因并释放未用占用
+Pending --> Pending : 顾客修改 [未到期且可改退]\n/ 替换占用及报价，递增版本并重计时
+Confirmed --> Pending : 顾客修改 [可改退]\n/ 替换占用及报价，递增版本并重计时
 Confirmed --> InHouse : 本店办理整单入住\n[在入住窗口且订单未受限制]
 InHouse --> Completed : 本店办理整单退房\n/ 记已用间夜并释放未用完整住宿日
 
@@ -34,6 +35,7 @@ note bottom of InHouse
   入住与确认均保持原占用。
 end note
 note bottom of Cancelled
+  可改退：服务端时间早于原入住日 00:00（北京时间）。
   已完成、已取消、已拒绝、已超时为终态。
   停售或停业登记待处置事项，保留当前订单状态。
 end note
