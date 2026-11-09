@@ -1,0 +1,54 @@
+@startuml
+!pragma layout smetana
+title 酒店预订系统 · 用例图
+left to right direction
+skinparam defaultFontName Noto Sans CJK SC
+skinparam shadowing false
+skinparam usecaseBackgroundColor #ECF6F4
+skinparam usecaseBorderColor #497D79
+skinparam ArrowColor #406779
+
+actor 顾客 as C
+actor 酒店工作人员 as S
+actor 平台管理员 as A
+actor 系统调度器 as T
+
+rectangle 酒店预订系统 {
+  usecase "顾客注册" as Reg
+  usecase "登录与退出" as Login
+  usecase "按条件搜索酒店与房型" as Search
+  usecase "确认报价并提交预订" as Book
+  usecase "查询本人订单" as Own
+  usecase "修改或取消本人预订" as Edit
+
+  usecase "维护本店资料、房型及日历库存" as Stock
+  usecase "查询本店订单、确认或拒绝" as Queue
+  usecase "办理整单入住与退房" as Stay
+  usecase "记录受限订单处置" as Case
+
+  usecase "登记酒店、管理账号与授权" as Grant
+  usecase "设置停业或恢复营业" as Close
+  usecase "按授权范围查询统计与日志" as Stats
+  usecase "按职责范围查询平台订单" as PlatformOrders
+
+  usecase "处理待确认超时及未到店" as Expire
+}
+C -- Reg
+C -- Login
+C -- Search
+C -- Book
+C -- Own
+C -- Edit
+S -- Login
+S -- Stock
+S -- Queue
+S -- Stay
+S -- Case
+S -- Stats
+A -- Login
+A -- Grant
+A -- Close
+A -- Stats
+A -- PlatformOrders
+T -- Expire
+@enduml

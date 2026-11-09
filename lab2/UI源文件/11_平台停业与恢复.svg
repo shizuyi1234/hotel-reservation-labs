@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="940" viewBox="0 0 1440 940" font-family="Noto Sans CJK SC, sans-serif">
+<rect x="0" y="0" width="1440" height="940" rx="0" fill="#F3F7F7" stroke="none"/>
+<rect x="0" y="0" width="1440" height="78" rx="0" fill="#12343A" stroke="none"/>
+<rect x="44" y="22" width="37" height="35" rx="9" fill="#80D6BC" stroke="none"/>
+<text x="62" y="47" font-size="20" fill="#12343A" font-weight="700" text-anchor="middle">栖</text>
+<text x="94" y="47" font-size="23" fill="#FFFFFF" font-weight="700" text-anchor="start">栖程酒店预订</text>
+<text x="1394" y="46" font-size="15" fill="#BFE3DC" font-weight="500" text-anchor="end">平台管理台</text>
+<rect x="0" y="78" width="240" height="862" rx="0" fill="#FFFFFF" stroke="none"/>
+<path d="M239 78H239V940" stroke="#D8E5E5" fill="none"/>
+<text x="32" y="127" font-size="13" fill="#536973" font-weight="700" text-anchor="start">功能导航</text>
+<text x="37" y="180" font-size="17" fill="#536973" font-weight="400" text-anchor="start">酒店入驻</text>
+<text x="37" y="235" font-size="17" fill="#536973" font-weight="400" text-anchor="start">账号与授权</text>
+<rect x="19" y="262" width="202" height="45" rx="9" fill="#E5F4EF" stroke="none"/>
+<rect x="19" y="271" width="4" height="27" rx="2" fill="#096B60" stroke="none"/>
+<text x="37" y="290" font-size="17" fill="#096B60" font-weight="700" text-anchor="start">停业管理</text>
+<text x="37" y="345" font-size="17" fill="#536973" font-weight="400" text-anchor="start">平台订单</text>
+<text x="37" y="400" font-size="17" fill="#536973" font-weight="400" text-anchor="start">统计与日志</text>
+<text x="34" y="850" font-size="15" fill="#096B60" font-weight="700" text-anchor="start">退出登录</text>
+<text x="34" y="900" font-size="13" fill="#536973" font-weight="400" text-anchor="start">界面原型  /  11</text>
+<text x="274" y="135" font-size="32" fill="#172E37" font-weight="700" text-anchor="start">平台停业与恢复</text>
+<text x="274" y="169" font-size="16" fill="#536973" font-weight="400" text-anchor="start">按日期设置酒店停业区间。受影响的未入住订单交由酒店工作台逐笔处置。</text>
+<rect x="274" y="207" width="1122" height="599" rx="12" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="296" y="243" font-size="21" fill="#172E37" font-weight="700" text-anchor="start">停业登记与恢复</text>
+<text x="298" y="294" font-size="14" fill="#536973" font-weight="700" text-anchor="start">选择酒店</text>
+<rect x="298" y="304" width="292" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="310" y="329" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">H018 · 秦淮里酒店  ▾</text>
+<text x="608" y="294" font-size="14" fill="#536973" font-weight="700" text-anchor="start">起始日期</text>
+<rect x="608" y="304" width="223" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="620" y="329" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">2026-11-28</text>
+<text x="849" y="294" font-size="14" fill="#536973" font-weight="700" text-anchor="start">截止日期（不含）</text>
+<rect x="849" y="304" width="223" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="861" y="329" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">2026-11-30</text>
+<text x="1090" y="294" font-size="14" fill="#536973" font-weight="700" text-anchor="start">停业原因</text>
+<rect x="1090" y="304" width="281" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="1102" y="329" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">消防设施检修</text>
+<rect x="298" y="380" width="227" height="40" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="411.5" y="406" font-size="16" fill="#096B60" font-weight="700" text-anchor="middle">预览受影响订单</text>
+<rect x="545" y="380" width="211" height="40" rx="8" fill="#096B60" stroke="#096B60"/>
+<text x="650.5" y="406" font-size="16" fill="#FFFFFF" font-weight="700" text-anchor="middle">确认设置停业</text>
+<rect x="298" y="450" width="1073" height="64" rx="9" fill="#FFF0D9" stroke="none"/>
+<text x="313" y="475" font-size="16" fill="#844412" font-weight="700" text-anchor="start">影响预览 · 2 笔未入住订单</text>
+<text x="313" y="498" font-size="14" fill="#844412" font-weight="400" text-anchor="start">保存后建立待处置事项，并阻止受影响日期的新预订。</text>
+<rect x="298" y="553" width="1074" height="41" rx="7" fill="#F3F7F7" stroke="none"/>
+<text x="310" y="580" font-size="14" fill="#536973" font-weight="700" text-anchor="start">酒店</text>
+<text x="553" y="580" font-size="14" fill="#536973" font-weight="700" text-anchor="start">停业区间</text>
+<text x="801" y="580" font-size="14" fill="#536973" font-weight="700" text-anchor="start">原因</text>
+<text x="992" y="580" font-size="14" fill="#536973" font-weight="700" text-anchor="start">状态</text>
+<text x="1182" y="580" font-size="14" fill="#536973" font-weight="700" text-anchor="start">操作</text>
+<path d="M298 649H1372V649" stroke="#D8E5E5" fill="none"/>
+<text x="310" y="627.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">H031 · 白鹭洲酒店</text>
+<text x="553" y="627.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">11-14 至 11-16</text>
+<text x="801" y="627.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">设备检修</text>
+<rect x="992" y="606.5" width="93" height="30" rx="8" fill="#FFF0D9" stroke="none"/>
+<text x="1038.5" y="626.5" font-size="14" fill="#844412" font-weight="700" text-anchor="middle">停业已排期</text>
+<text x="1182" y="627.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">恢复营业…</text>
+<text x="298" y="719" font-size="15" fill="#536973" font-weight="400" text-anchor="start">恢复营业会解除选中的停业限制，既有订单按其当前状态处理。</text>
+</svg>

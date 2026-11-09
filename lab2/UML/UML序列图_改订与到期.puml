@@ -1,0 +1,54 @@
+@startuml
+title 改订与到期处理 · 序列图
+skinparam defaultFontName Noto Sans CJK SC
+skinparam shadowing false
+skinparam ParticipantBackgroundColor #ECF6F4
+skinparam ParticipantBorderColor #497D79
+skinparam ArrowColor #406779
+hide footbox
+
+actor 顾客 as C
+boundary "顾客端" as UI
+control "订单服务（含到期处理）" as S
+database "关系数据库" as DB
+
+C -> UI : 确认改订报价及差额
+UI -> S : 提交改订（订单版本、报价标识、请求标识）
+S -> S : 校验登录身份和请求字段
+S -> DB : 开始事务，锁定请求键及订单行\n校验本人归属，越权时直接拒绝
+note right of DB
+  超时任务与订单变更争用同一订单行。
+  锁定后读取服务端时间和当前版本。
+end note
+alt 已有同键回执
+  S -> DB : 结束事务
+  S --> UI : 同内容返回原回执，内容不符拒绝
+else 首次有效提交
+  alt 待确认订单已到截止时刻
+    S -> DB : 置为已超时，释放未用库存\n保存状态记录、日志与回执并提交
+    S --> UI : 订单已超时
+  else 当前版本、状态或改订时限不符
+    S -> DB : 保存拒绝日志及回执并提交
+    S --> UI : 拒绝；版本冲突时提示刷新
+  else 可尝试改订
+    S -> DB : 固定顺序锁定新旧库存键的并集\n复核新条件、报价及限制，排查其他重复订单
+    note right of S
+      对每个房型日期键计算：
+      增量 = 新单需求量 − 该单旧有效占用。
+      容量校验基于增量，重叠日期仅调整差额。
+    end note
+    alt 新条件无效或需要重新报价
+      S -> DB : 保存结果回执和日志并提交\n保留原单与库存
+      S --> UI : 显示失败原因或更新后的报价
+    else 校验通过
+      S -> DB : 调整占用并写入新快照\n保留订单号，更新状态、版本和确认截止
+      S -> DB : 保存状态记录、日志及回执并提交
+      S --> UI : 显示更新后的待确认订单
+    end
+  end
+end
+note over S, DB
+  任一写入故障整体回滚；
+  回执与业务变更同时提交。
+end note
+@enduml

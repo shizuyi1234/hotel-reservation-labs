@@ -1,0 +1,57 @@
+@startuml
+!pragma layout smetana
+title 酒店预订系统 · 组件图
+top to bottom direction
+skinparam defaultFontName Noto Sans CJK SC
+skinparam shadowing false
+skinparam ArrowColor #406779
+skinparam componentBackgroundColor #EAF5F3
+skinparam componentBorderColor #497D79
+skinparam nodesep 38
+skinparam ranksep 52
+
+package "界面层" {
+  [顾客端] as Customer
+  [酒店工作台] as Staff
+  [平台管理台] as Admin
+}
+[应用接口与权限校验] as API
+package "业务模块" {
+  [账号与授权] as Auth
+  [酒店、房型与日历库存] as Stock
+  [搜索与逐晚报价] as Search
+  [订单与入住退房] as Order
+  [停售停业与待处置] as Closure
+  [查询统计与审计] as Read
+}
+[超时及未到店任务] as Job
+database "关系数据库\n订单、逐晚明细、库存、日志等" as DB
+
+Customer --> API
+Staff --> API
+Admin --> API
+API --> Auth : 校验角色与归属
+API --> Stock : 维护酒店与日历
+API --> Search : 组合筛选
+API --> Order : 预订与履约
+API --> Closure : 设置停业与登记处置
+API --> Read : 查订单、统计、日志
+Search --> Stock : 读取房态与夜价
+Order --> Stock : 校验并调整占用
+Order --> Closure : 校验受影响范围
+Closure --> DB : 保存限制及待处置项
+Job --> Order : 复用到期处理
+Auth --> DB
+Stock --> DB
+Order --> DB : 事务写入
+Read --> DB : 权限范围内读取
+note right of Job
+  请求入口和定时任务共用到期判定。
+  确认截止以服务端时钟为准。
+end note
+note bottom of DB
+  按城市定位候选酒店，按房型及日期批量查询库存。
+  酒店范围、创建时间及状态用于订单索引。
+  密码保存带盐的专用哈希；日志保留 180 天。
+end note
+@enduml

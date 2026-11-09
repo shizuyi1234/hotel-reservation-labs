@@ -1,0 +1,51 @@
+@startuml
+title 预订提交与跨日一致性 · 序列图
+skinparam defaultFontName Noto Sans CJK SC
+skinparam shadowing false
+skinparam ParticipantBackgroundColor #ECF6F4
+skinparam ParticipantBorderColor #497D79
+skinparam ArrowColor #406779
+hide footbox
+
+actor 顾客 as C
+boundary "顾客端" as UI
+control "订单服务" as S
+database "关系数据库" as DB
+
+C -> UI : 确认当前逐晚报价
+UI -> S : 提交预订（报价标识、请求标识）
+S -> S : 校验会话、角色、日期和输入
+alt 身份或输入无效
+  S --> UI : 拒绝并返回可展示的错误
+else 校验通过
+  group 数据库事务
+    S -> DB : 锁定或认领请求键，读取回执
+    alt 已有回执
+      S -> S : 核对请求摘要
+      S -> DB : 结束事务
+      S --> UI : 返回首次结果，或提示标识内容冲突
+    else 首次请求
+      S -> DB : 锁定酒店、房型及逐晚库存\n按固定顺序读取当前限制和有效占用
+      S -> DB : 检查同顾客同酒店、房型及日期的有效订单
+      alt 库存、营业或重复预订校验失败
+        S -> DB : 提交拒绝日志与回执，业务数据保持不变
+        S --> UI : 返回失败原因或原单入口
+      else 仅报价已变化
+        S -> DB : 保存重新报价回执并提交
+        S --> UI : 返回新报价，等待重新确认
+        note right of UI : 顾客确认新报价后，使用新的请求标识提交。
+      else 校验全部通过
+        S -> DB : 写入订单、逐晚价格和库存占用\n写入状态记录、日志与幂等回执
+        alt 任一写入失败
+          S -> DB : 整体回滚
+          S --> UI : 返回失败，可用同一请求标识重试
+        else 全部写入成功
+          S -> DB : 提交事务
+          S --> UI : 返回订单编号及确认截止
+        end
+      end
+    end
+  end
+end
+UI --> C : 展示处理结果
+@enduml

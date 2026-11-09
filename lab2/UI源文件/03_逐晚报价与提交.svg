@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="940" viewBox="0 0 1440 940" font-family="Noto Sans CJK SC, sans-serif">
+<rect x="0" y="0" width="1440" height="940" rx="0" fill="#F3F7F7" stroke="none"/>
+<rect x="0" y="0" width="1440" height="78" rx="0" fill="#12343A" stroke="none"/>
+<rect x="44" y="22" width="37" height="35" rx="9" fill="#80D6BC" stroke="none"/>
+<text x="62" y="47" font-size="20" fill="#12343A" font-weight="700" text-anchor="middle">栖</text>
+<text x="94" y="47" font-size="23" fill="#FFFFFF" font-weight="700" text-anchor="start">栖程酒店预订</text>
+<text x="1394" y="46" font-size="15" fill="#BFE3DC" font-weight="500" text-anchor="end">顾客端</text>
+<rect x="0" y="78" width="240" height="862" rx="0" fill="#FFFFFF" stroke="none"/>
+<path d="M239 78H239V940" stroke="#D8E5E5" fill="none"/>
+<text x="32" y="127" font-size="13" fill="#536973" font-weight="700" text-anchor="start">功能导航</text>
+<rect x="19" y="152" width="202" height="45" rx="9" fill="#E5F4EF" stroke="none"/>
+<rect x="19" y="161" width="4" height="27" rx="2" fill="#096B60" stroke="none"/>
+<text x="37" y="180" font-size="17" fill="#096B60" font-weight="700" text-anchor="start">搜索酒店</text>
+<text x="37" y="235" font-size="17" fill="#536973" font-weight="400" text-anchor="start">我的订单</text>
+<text x="37" y="290" font-size="17" fill="#536973" font-weight="400" text-anchor="start">账户</text>
+<text x="34" y="850" font-size="15" fill="#096B60" font-weight="700" text-anchor="start">退出登录</text>
+<text x="34" y="900" font-size="13" fill="#536973" font-weight="400" text-anchor="start">界面原型  /  03</text>
+<text x="274" y="135" font-size="32" fill="#172E37" font-weight="700" text-anchor="start">逐晚报价与提交</text>
+<text x="274" y="169" font-size="16" fill="#536973" font-weight="400" text-anchor="start">秦淮里酒店  /  标准双床房  /  2 间 · 3 人</text>
+<rect x="274" y="207" width="710" height="545" rx="12" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="296" y="243" font-size="21" fill="#172E37" font-weight="700" text-anchor="start">逐晚费用</text>
+<text x="296" y="270" font-size="14" fill="#536973" font-weight="400" text-anchor="start">住宿日期为 11 月 28 日至 30 日，退房日不计房费。</text>
+<rect x="296" y="298" width="664" height="41" rx="7" fill="#F3F7F7" stroke="none"/>
+<text x="308" y="325" font-size="14" fill="#536973" font-weight="700" text-anchor="start">住宿日</text>
+<text x="513" y="325" font-size="14" fill="#536973" font-weight="700" text-anchor="start">每间每晚</text>
+<text x="682" y="325" font-size="14" fill="#536973" font-weight="700" text-anchor="start">间数</text>
+<text x="815" y="325" font-size="14" fill="#536973" font-weight="700" text-anchor="start">该晚合计</text>
+<path d="M296 394H960V394" stroke="#D8E5E5" fill="none"/>
+<text x="308" y="372.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">11 月 28 日</text>
+<text x="513" y="372.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥200.00</text>
+<text x="682" y="372.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">2</text>
+<text x="815" y="372.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥400.00</text>
+<path d="M296 449H960V449" stroke="#D8E5E5" fill="none"/>
+<text x="308" y="427.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">11 月 29 日</text>
+<text x="513" y="427.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥300.00</text>
+<text x="682" y="427.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">2</text>
+<text x="815" y="427.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥600.00</text>
+<text x="296" y="504" font-size="18" fill="#536973" font-weight="400" text-anchor="start">住宿总价</text>
+<text x="959" y="513" font-size="35" fill="#096B60" font-weight="700" text-anchor="end">¥1,000.00</text>
+<rect x="296" y="548" width="662" height="64" rx="9" fill="#E8F2FA" stroke="none"/>
+<text x="311" y="573" font-size="16" fill="#235F88" font-weight="700" text-anchor="start">到店付款</text>
+<text x="311" y="596" font-size="14" fill="#235F88" font-weight="400" text-anchor="start">提交成功后先进入待确认，页面显示酒店确认截止时刻。</text>
+<rect x="296" y="667" width="145" height="40" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="368.5" y="693" font-size="16" fill="#096B60" font-weight="700" text-anchor="middle">返回搜索</text>
+<rect x="748" y="667" width="210" height="40" rx="8" fill="#096B60" stroke="#096B60"/>
+<text x="853.0" y="693" font-size="16" fill="#FFFFFF" font-weight="700" text-anchor="middle">确认报价并预订</text>
+<rect x="1007" y="207" width="389" height="545" rx="12" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="1029" y="243" font-size="21" fill="#172E37" font-weight="700" text-anchor="start">报价变化时的反馈</text>
+<text x="1029" y="270" font-size="14" fill="#536973" font-weight="400" text-anchor="start">提交后的分支界面示意</text>
+<rect x="1028" y="294" width="346" height="64" rx="9" fill="#FFF0D9" stroke="none"/>
+<text x="1043" y="319" font-size="16" fill="#844412" font-weight="700" text-anchor="start">11 月 29 日夜价已更新</text>
+<text x="1043" y="342" font-size="14" fill="#844412" font-weight="400" text-anchor="start">¥300.00 → ¥320.00</text>
+<text x="1030" y="407" font-size="16" fill="#536973" font-weight="400" text-anchor="start">原总价</text>
+<text x="1371" y="407" font-size="19" fill="#172E37" font-weight="500" text-anchor="end">¥1,000.00</text>
+<text x="1030" y="448" font-size="16" fill="#536973" font-weight="400" text-anchor="start">新总价</text>
+<text x="1371" y="448" font-size="24" fill="#096B60" font-weight="700" text-anchor="end">¥1,040.00</text>
+<path d="M1028 480H1373V480" stroke="#D8E5E5" fill="none"/>
+<text x="1030" y="517" font-size="14" fill="#536973" font-weight="400" text-anchor="start">查看更新后的逐晚价格后再确认。</text>
+<rect x="1028" y="559" width="346" height="40" rx="8" fill="#096B60" stroke="#096B60"/>
+<text x="1201.0" y="585" font-size="16" fill="#FFFFFF" font-weight="700" text-anchor="middle">接受新报价</text>
+<rect x="1028" y="611" width="346" height="40" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="1201.0" y="637" font-size="16" fill="#096B60" font-weight="700" text-anchor="middle">保留筛选条件并返回</text>
+</svg>

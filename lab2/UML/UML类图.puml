@@ -1,0 +1,121 @@
+@startuml
+!pragma layout smetana
+title 酒店预订系统 · 类图
+skinparam defaultFontName Noto Sans CJK SC
+skinparam shadowing false
+skinparam classBackgroundColor #ECF6F4
+skinparam classBorderColor #497D79
+skinparam ArrowColor #406779
+skinparam nodesep 26
+skinparam ranksep 38
+hide circle
+hide empty members
+
+class "用户" as User {
+  account : String {unique}
+  passwordHash : String
+  role : Role
+  enabled : Boolean
+}
+class "酒店授权" as Grant {
+  userId + hotelId : Key
+}
+class "酒店" as Hotel {
+  hotelId : ID
+  name, city, address, contact : String
+  enabled : Boolean
+}
+class "房型" as Room {
+  roomTypeId : ID
+  name, description : String
+  capacityPerRoom : Integer
+  enabled : Boolean
+}
+class "每日库存" as Stock {
+  roomTypeId + stayDate : Key
+  total : Integer
+  /occupied : Integer
+  nightlyRateFen : Integer
+  stopSale : Boolean
+  --
+  available() : Integer
+}
+class "预订订单" as Order {
+  orderNo : ID {unique}
+  checkInDate, checkOutDate : Date
+  guestCount, roomCount : Integer
+  status : OrderStatus
+  version : Integer
+  createdAt, confirmBy : Instant
+  actualCheckIn, actualCheckOut : Instant
+  checkInStaffId, checkOutStaffId : ID
+  hotelName, roomTypeName : String
+  totalFen : Integer
+  --
+  transition(event, now)
+}
+class "逐晚明细" as Night {
+  orderNo + revision + stayDate : Key
+  roomTypeId : ID
+  unitRateFen, rooms : Integer
+  usage : NightUsage
+}
+class "状态记录" as Change {
+  orderNo, actorId : ID
+  before, after : OrderStatus
+  event, reason : String
+  occurredAt : Instant
+}
+class "提交回执" as Receipt {
+  userId + operation + requestId : Key
+  payloadHash, result : String
+}
+class "停业区间" as Closure {
+  hotelId : ID
+  startDate, endDate : Date
+  reason : String
+  active : Boolean
+}
+class "待处置事项" as Case {
+  orderNo : ID
+  restrictionRef, contactRecord : String
+  decision : String
+  resolvedAt : Instant
+}
+class "操作日志" as Log {
+  actorId, hotelId : ID
+  action, targetRef, result : String
+  before, after : String
+  occurredAt : Instant
+}
+
+User "1" -- "0..*" Grant
+Hotel "1" -- "0..*" Grant
+Hotel "1" -- "0..*" Room
+Room "1" -- "0..*" Stock
+User "1" -- "0..*" Order : 顾客
+Hotel "1" -- "0..*" Order
+Room "1" -- "0..*" Order : 当前房型
+Order "1" *-- "1..*" Night : 逐晚价格快照
+Night "0..*" --> "1" Stock : 房型及住宿日
+Order "1" *-- "1..*" Change
+Order "1" -- "0..*" Case
+Hotel "1" -- "0..*" Closure
+User "1" -- "0..*" Receipt
+User "0..1" <-- "0..*" Log : 操作人（含系统事件）
+Hotel "0..1" <-- "0..*" Log : 酒店范围
+
+note right of Night
+  NightUsage：预留、已用、释放
+  修改保留旧版本明细；
+  新版本与有效占用同时写入。
+  revision 为报价修订号，
+  状态变化仅递增订单 version。
+end note
+note right of Stock
+  可售数 = 总量 − 有效占用
+  0 ≤ 有效占用 ≤ 总量
+  从有效间夜明细计算；已到期的
+  待确认预留不计入有效占用。
+end note
+@enduml

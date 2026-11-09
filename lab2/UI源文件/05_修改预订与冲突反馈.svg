@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="940" viewBox="0 0 1440 940" font-family="Noto Sans CJK SC, sans-serif">
+<rect x="0" y="0" width="1440" height="940" rx="0" fill="#F3F7F7" stroke="none"/>
+<rect x="0" y="0" width="1440" height="78" rx="0" fill="#12343A" stroke="none"/>
+<rect x="44" y="22" width="37" height="35" rx="9" fill="#80D6BC" stroke="none"/>
+<text x="62" y="47" font-size="20" fill="#12343A" font-weight="700" text-anchor="middle">栖</text>
+<text x="94" y="47" font-size="23" fill="#FFFFFF" font-weight="700" text-anchor="start">栖程酒店预订</text>
+<text x="1394" y="46" font-size="15" fill="#BFE3DC" font-weight="500" text-anchor="end">顾客端</text>
+<rect x="0" y="78" width="240" height="862" rx="0" fill="#FFFFFF" stroke="none"/>
+<path d="M239 78H239V940" stroke="#D8E5E5" fill="none"/>
+<text x="32" y="127" font-size="13" fill="#536973" font-weight="700" text-anchor="start">功能导航</text>
+<text x="37" y="180" font-size="17" fill="#536973" font-weight="400" text-anchor="start">搜索酒店</text>
+<rect x="19" y="207" width="202" height="45" rx="9" fill="#E5F4EF" stroke="none"/>
+<rect x="19" y="216" width="4" height="27" rx="2" fill="#096B60" stroke="none"/>
+<text x="37" y="235" font-size="17" fill="#096B60" font-weight="700" text-anchor="start">我的订单</text>
+<text x="37" y="290" font-size="17" fill="#536973" font-weight="400" text-anchor="start">账户</text>
+<text x="34" y="850" font-size="15" fill="#096B60" font-weight="700" text-anchor="start">退出登录</text>
+<text x="34" y="900" font-size="13" fill="#536973" font-weight="400" text-anchor="start">界面原型  /  05</text>
+<text x="274" y="135" font-size="32" fill="#172E37" font-weight="700" text-anchor="start">修改预订与冲突反馈</text>
+<text x="274" y="169" font-size="16" fill="#536973" font-weight="400" text-anchor="start">订单 Q261109018  /  改订沿用原订单号，成功后重新等待酒店确认。</text>
+<rect x="274" y="207" width="694" height="579" rx="12" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="296" y="243" font-size="21" fill="#172E37" font-weight="700" text-anchor="start">调整住宿安排</text>
+<text x="296" y="270" font-size="14" fill="#536973" font-weight="400" text-anchor="start">原住宿为 11 月 28 日至 30 日，2 间标准双床房。</text>
+<text x="298" y="312" font-size="14" fill="#536973" font-weight="700" text-anchor="start">新入住日</text>
+<rect x="298" y="322" width="310" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="310" y="347" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">2026-11-28</text>
+<text x="628" y="312" font-size="14" fill="#536973" font-weight="700" text-anchor="start">新退房日</text>
+<rect x="628" y="322" width="311" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="640" y="347" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">2026-11-30</text>
+<text x="298" y="399" font-size="14" fill="#536973" font-weight="700" text-anchor="start">新房型</text>
+<rect x="298" y="409" width="310" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="310" y="434" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">标准双床房  ▾</text>
+<text x="628" y="399" font-size="14" fill="#536973" font-weight="700" text-anchor="start">新间数</text>
+<rect x="628" y="409" width="311" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="640" y="434" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">3</text>
+<rect x="298" y="487" width="640" height="41" rx="7" fill="#F3F7F7" stroke="none"/>
+<text x="310" y="514" font-size="14" fill="#536973" font-weight="700" text-anchor="start">住宿日</text>
+<text x="515" y="514" font-size="14" fill="#536973" font-weight="700" text-anchor="start">每间每晚</text>
+<text x="660" y="514" font-size="14" fill="#536973" font-weight="700" text-anchor="start">新间数</text>
+<text x="797" y="514" font-size="14" fill="#536973" font-weight="700" text-anchor="start">该晚合计</text>
+<path d="M298 575H938V575" stroke="#D8E5E5" fill="none"/>
+<text x="310" y="557.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">11 月 28 日</text>
+<text x="515" y="557.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥200.00</text>
+<text x="660" y="557.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">3</text>
+<text x="797" y="557.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥600.00</text>
+<path d="M298 622H938V622" stroke="#D8E5E5" fill="none"/>
+<text x="310" y="604.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">11 月 29 日</text>
+<text x="515" y="604.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥300.00</text>
+<text x="660" y="604.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">3</text>
+<text x="797" y="604.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥900.00</text>
+<rect x="298" y="683" width="200" height="40" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="398.0" y="709" font-size="16" fill="#096B60" font-weight="700" text-anchor="middle">重新计算报价</text>
+<rect x="993" y="207" width="403" height="579" rx="12" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="1015" y="243" font-size="21" fill="#172E37" font-weight="700" text-anchor="start">变更报价</text>
+<text x="1015" y="270" font-size="14" fill="#536973" font-weight="400" text-anchor="start">逐晚校验通过后方可确认修改。</text>
+<text x="1016" y="310" font-size="17" fill="#536973" font-weight="400" text-anchor="start">原订单总价</text>
+<text x="1371" y="310" font-size="20" fill="#172E37" font-weight="500" text-anchor="end">¥1,000.00</text>
+<text x="1016" y="353" font-size="17" fill="#536973" font-weight="400" text-anchor="start">新订单总价</text>
+<text x="1371" y="353" font-size="20" fill="#172E37" font-weight="500" text-anchor="end">¥1,500.00</text>
+<path d="M1016 374H1371V374" stroke="#D8E5E5" fill="none"/>
+<text x="1016" y="414" font-size="18" fill="#536973" font-weight="400" text-anchor="start">差额</text>
+<text x="1371" y="417" font-size="27" fill="#096B60" font-weight="700" text-anchor="end">+ ¥500.00</text>
+<rect x="1016" y="451" width="355" height="40" rx="8" fill="#096B60" stroke="#096B60"/>
+<text x="1193.5" y="477" font-size="16" fill="#FFFFFF" font-weight="700" text-anchor="middle">确认修改</text>
+<rect x="1016" y="540" width="355" height="64" rx="9" fill="#FFF0D9" stroke="none"/>
+<text x="1031" y="565" font-size="16" fill="#844412" font-weight="700" text-anchor="start">此页订单版本已过期</text>
+<text x="1031" y="588" font-size="14" fill="#844412" font-weight="400" text-anchor="start">本次修改未生效，刷新后核对最新状态。</text>
+<rect x="1016" y="622" width="355" height="40" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="1193.5" y="648" font-size="16" fill="#096B60" font-weight="700" text-anchor="middle">刷新订单详情</text>
+<text x="1016" y="725" font-size="13" fill="#536973" font-weight="400" text-anchor="start">以上提示为版本冲突时的界面示意。</text>
+</svg>

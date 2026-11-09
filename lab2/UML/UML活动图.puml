@@ -1,0 +1,53 @@
+@startuml
+title 顾客查询与预订 · 活动图
+skinparam defaultFontName Noto Sans CJK SC
+skinparam shadowing false
+skinparam activityBackgroundColor #ECF6F4
+skinparam activityBorderColor #497D79
+skinparam ArrowColor #406779
+
+|顾客|
+start
+:输入城市、日期、人数、间数及筛选条件;
+|系统|
+while (输入无效？) is (是)
+  :指出错误字段并保留其他输入;
+  |顾客|
+  :修正查询条件;
+  |系统|
+endwhile (否)
+:筛选全住宿区间可订的房型;
+if (有可订结果？) then (有)
+  :按总价、酒店编号排序;
+else (无)
+  :提示无匹配房型;
+  stop
+endif
+|顾客|
+:选择房型并登录;
+|系统|
+:返回逐晚单价、间数、总价与报价标识;
+repeat
+  |顾客|
+  if (确认报价？) then (确认)
+    :提交预订及请求标识
+重新报价后确认则使用新标识;
+  else (放弃)
+    stop
+  endif
+  |系统|
+  :重校权限、请求标识及当前房态;
+  if (仅报价发生变化？) then (是)
+    :展示更新后的逐晚报价;
+  endif
+repeat while (需要重新确认报价？) is (是) not (否)
+if (提交结果？) then (首次成功)
+  :提交订单、价格快照和逐晚占用;
+  :返回待确认状态及 30 分钟截止;
+elseif (相同请求重试) then (已有回执)
+  :返回原回执;
+else (失败)
+  :返回冲突原因；无新增订单或占用;
+endif
+stop
+@enduml

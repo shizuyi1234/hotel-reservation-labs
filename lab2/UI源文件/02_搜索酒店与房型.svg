@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="940" viewBox="0 0 1440 940" font-family="Noto Sans CJK SC, sans-serif">
+<rect x="0" y="0" width="1440" height="940" rx="0" fill="#F3F7F7" stroke="none"/>
+<rect x="0" y="0" width="1440" height="78" rx="0" fill="#12343A" stroke="none"/>
+<rect x="44" y="22" width="37" height="35" rx="9" fill="#80D6BC" stroke="none"/>
+<text x="62" y="47" font-size="20" fill="#12343A" font-weight="700" text-anchor="middle">栖</text>
+<text x="94" y="47" font-size="23" fill="#FFFFFF" font-weight="700" text-anchor="start">栖程酒店预订</text>
+<text x="1394" y="46" font-size="15" fill="#BFE3DC" font-weight="500" text-anchor="end">顾客端</text>
+<rect x="0" y="78" width="240" height="862" rx="0" fill="#FFFFFF" stroke="none"/>
+<path d="M239 78H239V940" stroke="#D8E5E5" fill="none"/>
+<text x="32" y="127" font-size="13" fill="#536973" font-weight="700" text-anchor="start">功能导航</text>
+<rect x="19" y="152" width="202" height="45" rx="9" fill="#E5F4EF" stroke="none"/>
+<rect x="19" y="161" width="4" height="27" rx="2" fill="#096B60" stroke="none"/>
+<text x="37" y="180" font-size="17" fill="#096B60" font-weight="700" text-anchor="start">搜索酒店</text>
+<text x="37" y="235" font-size="17" fill="#536973" font-weight="400" text-anchor="start">我的订单</text>
+<text x="37" y="290" font-size="17" fill="#536973" font-weight="400" text-anchor="start">账户</text>
+<text x="34" y="850" font-size="15" fill="#096B60" font-weight="700" text-anchor="start">退出登录</text>
+<text x="34" y="900" font-size="13" fill="#536973" font-weight="400" text-anchor="start">界面原型  /  02</text>
+<text x="274" y="135" font-size="32" fill="#172E37" font-weight="700" text-anchor="start">搜索酒店与房型</text>
+<text x="274" y="169" font-size="16" fill="#536973" font-weight="400" text-anchor="start">按整段住宿日期筛选可订房型，并查看所选间数对应的住宿总价。</text>
+<rect x="274" y="199" width="1122" height="264" rx="12" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="296" y="235" font-size="21" fill="#172E37" font-weight="700" text-anchor="start">住宿条件</text>
+<text x="298" y="274" font-size="14" fill="#536973" font-weight="700" text-anchor="start">城市</text>
+<rect x="298" y="284" width="250" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="310" y="309" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">南京</text>
+<text x="568" y="274" font-size="14" fill="#536973" font-weight="700" text-anchor="start">入住日期</text>
+<rect x="568" y="284" width="248" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="580" y="309" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">2026-11-28</text>
+<text x="836" y="274" font-size="14" fill="#536973" font-weight="700" text-anchor="start">退房日期</text>
+<rect x="836" y="284" width="250" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="848" y="309" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">2026-11-30</text>
+<text x="1106" y="274" font-size="14" fill="#536973" font-weight="700" text-anchor="start">入住人数</text>
+<rect x="1106" y="284" width="124" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="1118" y="309" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">3</text>
+<text x="1247" y="274" font-size="14" fill="#536973" font-weight="700" text-anchor="start">房间数</text>
+<rect x="1247" y="284" width="124" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="1259" y="309" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">2</text>
+<text x="298" y="362" font-size="14" fill="#536973" font-weight="700" text-anchor="start">房型</text>
+<rect x="298" y="372" width="250" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="310" y="397" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">标准双床房</text>
+<text x="568" y="362" font-size="14" fill="#536973" font-weight="700" text-anchor="start">每间每晚最低价</text>
+<rect x="568" y="372" width="248" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="580" y="397" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥180</text>
+<text x="836" y="362" font-size="14" fill="#536973" font-weight="700" text-anchor="start">每间每晚最高价</text>
+<rect x="836" y="372" width="250" height="38" rx="8" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="848" y="397" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥350</text>
+<rect x="1106" y="372" width="265" height="40" rx="8" fill="#096B60" stroke="#096B60"/>
+<text x="1238.5" y="398" font-size="16" fill="#FFFFFF" font-weight="700" text-anchor="middle">搜索可订房型</text>
+<rect x="274" y="485" width="1122" height="320" rx="12" fill="#FFFFFF" stroke="#D8E5E5"/>
+<text x="296" y="521" font-size="21" fill="#172E37" font-weight="700" text-anchor="start">可订房型</text>
+<text x="296" y="548" font-size="14" fill="#536973" font-weight="400" text-anchor="start">两晚 · 两间 · 总价升序，同价按酒店编号升序</text>
+<rect x="296" y="568" width="1072" height="41" rx="7" fill="#F3F7F7" stroke="none"/>
+<text x="308" y="595" font-size="14" fill="#536973" font-weight="700" text-anchor="start">酒店 / 编号</text>
+<text x="538" y="595" font-size="14" fill="#536973" font-weight="700" text-anchor="start">房型</text>
+<text x="784" y="595" font-size="14" fill="#536973" font-weight="700" text-anchor="start">每间容量</text>
+<text x="924" y="595" font-size="14" fill="#536973" font-weight="700" text-anchor="start">两晚单价</text>
+<text x="1074" y="595" font-size="14" fill="#536973" font-weight="700" text-anchor="start">住宿总价</text>
+<text x="1224" y="595" font-size="14" fill="#536973" font-weight="700" text-anchor="start">操作</text>
+<path d="M296 664H1368V664" stroke="#D8E5E5" fill="none"/>
+<text x="308" y="642.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">秦淮里酒店 / H018</text>
+<text x="538" y="642.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">标准双床房</text>
+<text x="784" y="642.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">2 人</text>
+<text x="924" y="642.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥200 / ¥300</text>
+<text x="1074" y="642.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥1,000.00</text>
+<text x="1224" y="642.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">查看报价</text>
+<path d="M296 719H1368V719" stroke="#D8E5E5" fill="none"/>
+<text x="308" y="697.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">白鹭洲酒店 / H031</text>
+<text x="538" y="697.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">标准双床房</text>
+<text x="784" y="697.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">2 人</text>
+<text x="924" y="697.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥240 / ¥290</text>
+<text x="1074" y="697.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">¥1,060.00</text>
+<text x="1224" y="697.5" font-size="16" fill="#172E37" font-weight="400" text-anchor="start">查看报价</text>
+<rect x="296" y="734" width="1076" height="42" rx="9" fill="#E8F2FA" stroke="none"/>
+<text x="311" y="759" font-size="16" fill="#235F88" font-weight="700" text-anchor="start">库存及房价以提交时复核结果为准。</text>
+</svg>
