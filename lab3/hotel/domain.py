@@ -118,7 +118,9 @@ class Stay:
             errors["退房日"] = f"退房须晚于入住，最多预订 {limit} 晚"
         if errors:
             raise BusinessError("invalid", "请修正住宿条件", errors)
-        return [(first + timedelta(days=i)).isoformat() for i in range((last-first).days)]
+        return [
+            (first + timedelta(days=i)).isoformat() for i in range((last - first).days)
+        ]
 
 
 @dataclass(frozen=True)

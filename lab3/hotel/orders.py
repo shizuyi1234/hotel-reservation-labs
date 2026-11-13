@@ -3,11 +3,17 @@
 import hmac
 import json
 from dataclasses import asdict
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from .domain import (
-    ACTIVE_BOOKINGS, TRANSITIONS, BusinessError, boundary, fingerprint,
-    integer, required, timestamp,
+    ACTIVE_BOOKINGS,
+    TRANSITIONS,
+    BusinessError,
+    boundary,
+    fingerprint,
+    integer,
+    required,
+    timestamp,
 )
 
 
@@ -45,7 +51,11 @@ class Orders:
             if order["status"] == "pending":
                 action, status, reason = "expire", "expired", "超过酒店确认截止"
             else:
-                action, status, reason = "no_show", "cancelled", "计划退房日 12:00 仍未到店"
+                action, status, reason = (
+                    "no_show",
+                    "cancelled",
+                    "计划退房日 12:00 仍未到店",
+                )
             self._release(order)
             self._transition(order, None, at, action, status, reason)
         return len(due)
@@ -62,8 +72,14 @@ class Orders:
             (order_id, actor, at, action, before, after, reason, room),
         )
         self.store.log(
-            actor, hotel, at, action, str(order_id),
-            detail=reason, before=before, after=after,
+            actor,
+            hotel,
+            at,
+            action,
+            str(order_id),
+            detail=reason,
+            before=before,
+            after=after,
         )
 
     def _transition(self, order, actor, at, action, after, reason=""):
@@ -75,8 +91,15 @@ class Orders:
             (after, order["id"]),
         )
         self._event(
-            order["id"], actor, order["hotel_id"], order["room_id"],
-            at, action, before, after, reason,
+            order["id"],
+            actor,
+            order["hotel_id"],
+            order["room_id"],
+            at,
+            action,
+            before,
+            after,
+            reason,
         )
         if after in ("expired", "rejected", "cancelled"):
             self.store.execute(
@@ -102,16 +125,25 @@ class Orders:
             ],
         )
 
-    def _existing(self, actor, quote, skip=None):
+    def _existing(self, actor, room, stay, skip=None):
         row = self.store.one(
             """SELECT id FROM orders WHERE customer_id=? AND hotel_id=? AND room_id=?
                AND arrival=? AND departure=? AND status IN ('pending','confirmed')
                AND (? IS NULL OR id<>?) ORDER BY id LIMIT 1""",
-            (actor, quote.hotel_id, quote.room_id, quote.stay.arrival,
-             quote.stay.departure, skip, skip),
+            (
+                actor,
+                room["hotel_id"],
+                room["id"],
+                stay.arrival,
+                stay.departure,
+                skip,
+                skip,
+            ),
         )
         if row:
-            raise BusinessError("duplicate_order", "存在相同预订", {"order_id": row["id"]})
+            raise BusinessError(
+                "duplicate_order", "存在相同预订", {"order_id": row["id"]}
+            )
 
     @staticmethod
     def _matches_quote(quote, quoted):
@@ -134,10 +166,15 @@ class Orders:
             )
             if old:
                 if old["digest"] != digest:
-                    raise BusinessError("request_conflict", "同一请求标识已用于不同内容")
+                    raise BusinessError(
+                        "request_conflict", "同一请求标识已用于不同内容"
+                    )
                 return json.loads(old["response"])
             self._due(now)
-            hotel, target = None, str(payload.get("order_id", payload.get("room_id", "")))
+            hotel, target = (
+                None,
+                str(payload.get("order_id", payload.get("room_id", ""))),
+            )
             order = None
             try:
                 with self.store.savepoint():
@@ -151,12 +188,21 @@ class Orders:
             except BusinessError as exc:
                 response = exc.result()
                 if operation == "modify" and exc.code == "requote":
-                    response["details"]["difference"] = response["details"]["total"] - order["total"]
+                    response["details"]["difference"] = (
+                        response["details"]["total"] - order["total"]
+                    )
                     response["details"]["version"] = order["version"]
                 status = order["status"] if order else None
                 self.store.log(
-                    actor["id"], hotel, at, operation, target, result=exc.code,
-                    detail=str(exc), before=status, after=status,
+                    actor["id"],
+                    hotel,
+                    at,
+                    operation,
+                    target,
+                    result=exc.code,
+                    detail=str(exc),
+                    before=status,
+                    after=status,
                 )
             self.store.execute(
                 "INSERT INTO receipts(actor_id,operation,request_id,digest,response) VALUES(?,?,?,?,?)",
@@ -190,12 +236,15 @@ class Orders:
         }
 
     def _updated(self, order_id):
-        return self._summary(self.store.one("SELECT * FROM orders WHERE id=?", (order_id,)))
+        return self._summary(
+            self.store.one("SELECT * FROM orders WHERE id=?", (order_id,))
+        )
 
     def book(self, token, room_id, stay, quoted, request_id):
         def perform(actor, now, _order):
+            stay.days(now.date())
+            self._existing(actor["id"], self.catalog.room(room_id), stay)
             quote = self.search.quote(room_id, stay, now)
-            self._existing(actor["id"], quote)
             self._matches_quote(quote, quoted)
             at = timestamp(now)
             deadline = timestamp(now + timedelta(minutes=30))
@@ -203,14 +252,32 @@ class Orders:
                 """INSERT INTO orders(customer_id,hotel_id,room_id,hotel_name,room_name,
                         arrival,departure,people,quantity,total,status,created_at,deadline)
                    VALUES(?,?,?,?,?,?,?,?,?,?,'pending',?,?)""",
-                (actor["id"], quote.hotel_id, room_id, quote.hotel_name, quote.room_name,
-                 stay.arrival, stay.departure, stay.people, stay.quantity,
-                 quote.total, at, deadline),
+                (
+                    actor["id"],
+                    quote.hotel_id,
+                    room_id,
+                    quote.hotel_name,
+                    quote.room_name,
+                    stay.arrival,
+                    stay.departure,
+                    stay.people,
+                    stay.quantity,
+                    quote.total,
+                    at,
+                    deadline,
+                ),
             ).lastrowid
             self._save_nights(order_id, 1, quote)
             self._event(
-                order_id, actor["id"], quote.hotel_id, room_id,
-                at, "book", None, "pending", "",
+                order_id,
+                actor["id"],
+                quote.hotel_id,
+                room_id,
+                at,
+                "book",
+                None,
+                "pending",
+                "",
             )
             return self._updated(order_id)
 
@@ -222,12 +289,15 @@ class Orders:
         integer(version, "订单版本")
         if order["version"] != version:
             raise BusinessError(
-                "version", "订单版本已变化，请刷新订单",
+                "version",
+                "订单版本已变化，请刷新订单",
                 {"version": order["version"], "status": order["status"]},
             )
 
     @staticmethod
     def _customer_window(order, now):
+        if order["status"] == "expired":
+            raise BusinessError("expired", "订单已超过确认截止")
         if order["status"] not in ACTIVE_BOOKINGS:
             raise BusinessError("state", "只有待确认或已确认订单可以改退")
         if order["status"] == "pending" and timestamp(now) >= order["deadline"]:
@@ -237,12 +307,13 @@ class Orders:
 
     def modify(self, token, order_id, version, room_id, stay, quoted, request_id):
         def perform(actor, now, order):
-            self._version(order, version)
             self._customer_window(order, now)
+            self._version(order, version)
             if stay.people != order["people"]:
                 raise BusinessError("invalid", "改订须保留原入住人数")
+            stay.days(now.date())
+            self._existing(actor["id"], self.catalog.room(room_id), stay, order_id)
             quote = self.search.quote(room_id, stay, now, order)
-            self._existing(actor["id"], quote, order_id)
             self._matches_quote(quote, quoted)
             self._release(order)
             revision = order["revision"] + 1
@@ -252,9 +323,19 @@ class Orders:
                 """UPDATE orders SET room_id=?,hotel_name=?,room_name=?,arrival=?,
                        departure=?,people=?,quantity=?,total=?,revision=?,deadline=?
                    WHERE id=?""",
-                (room_id, quote.hotel_name, quote.room_name, stay.arrival,
-                 stay.departure, stay.people, stay.quantity, quote.total,
-                 revision, timestamp(now + timedelta(minutes=30)), order_id),
+                (
+                    room_id,
+                    quote.hotel_name,
+                    quote.room_name,
+                    stay.arrival,
+                    stay.departure,
+                    stay.people,
+                    stay.quantity,
+                    quote.total,
+                    revision,
+                    timestamp(now + timedelta(minutes=30)),
+                    order_id,
+                ),
             )
             self.store.execute(
                 """UPDATE cases SET resolved_at=?,decision='已按新安排改订'
@@ -267,17 +348,22 @@ class Orders:
             return self._updated(order_id)
 
         payload = {
-            "order_id": order_id, "version": version, "room_id": room_id,
-            "stay": asdict(stay), "quote": quoted,
+            "order_id": order_id,
+            "version": version,
+            "room_id": room_id,
+            "stay": asdict(stay),
+            "quote": quoted,
         }
         return self._command(token, "guest", "modify", request_id, payload, perform)
 
     def cancel(self, token, order_id, version, request_id):
         def perform(actor, now, order):
-            self._version(order, version)
             self._customer_window(order, now)
+            self._version(order, version)
             self._release(order)
-            self._transition(order, actor["id"], timestamp(now), "cancel", "cancelled", "顾客取消")
+            self._transition(
+                order, actor["id"], timestamp(now), "cancel", "cancelled", "顾客取消"
+            )
             return self._updated(order_id)
 
         payload = {"order_id": order_id, "version": version}
@@ -285,8 +371,11 @@ class Orders:
 
     def _blocked(self, order):
         if self.catalog.blocked(
-            order["hotel_id"], order["room_id"],
-            order["arrival"], order["departure"], for_existing=True,
+            order["hotel_id"],
+            order["room_id"],
+            order["arrival"],
+            order["departure"],
+            for_existing=True,
         ):
             raise BusinessError("closed", "订单涉及停售或停业，请先联系顾客处理")
 
@@ -301,6 +390,8 @@ class Orders:
             raise BusinessError("invalid", "未知订单操作")
 
         def perform(actor, now, order):
+            if order["status"] == "expired":
+                raise BusinessError("expired", "订单已超过确认截止")
             self._version(order, version)
             before, after = states[action]
             if order["status"] != before:
@@ -313,7 +404,11 @@ class Orders:
                 detail = required(reason, "拒单原因", 300)
                 self._release(order)
             if action == "check_in":
-                if not boundary(order["arrival"], 14) <= now < boundary(order["departure"], 12):
+                if (
+                    not boundary(order["arrival"], 14)
+                    <= now
+                    < boundary(order["departure"], 12)
+                ):
                     raise BusinessError("window", "当前不在入住办理时间内")
                 self.store.execute(
                     "UPDATE orders SET checked_in_at=?,checkin_staff_id=? WHERE id=?",
@@ -330,13 +425,19 @@ class Orders:
     def _checkout(self, order, actor, now, at):
         if at < order["checked_in_at"]:
             raise BusinessError("window", "退房时间早于实际入住")
+        checked_in = datetime.fromisoformat(order["checked_in_at"])
         last_used = now.date()
-        if now.hour < 14:
+        if now.hour < 14 and checked_in.date() < now.date():
             last_used -= timedelta(days=1)
         self.store.execute(
-            """UPDATE nights SET usage=CASE WHEN day<=? THEN 'used' ELSE 'released' END
+            """UPDATE nights SET usage=CASE WHEN day BETWEEN ? AND ? THEN 'used' ELSE 'released' END
                WHERE order_id=? AND revision=? AND usage='reserved'""",
-            (last_used.isoformat(), order["id"], order["revision"]),
+            (
+                checked_in.date().isoformat(),
+                last_used.isoformat(),
+                order["id"],
+                order["revision"],
+            ),
         )
         self.store.execute(
             "UPDATE orders SET checked_out_at=?,checkout_staff_id=? WHERE id=?",
@@ -349,10 +450,17 @@ class Orders:
             actor = self.accounts.require(token)
             order = self._order(actor, order_id)
             result = dict(order)
-            result["nights"] = [dict(row) for row in self.store.all(
-                "SELECT * FROM nights WHERE order_id=? ORDER BY revision,day", (order_id,)
-            )]
-            result["events"] = [dict(row) for row in self.store.all(
-                "SELECT * FROM events WHERE order_id=? ORDER BY id", (order_id,)
-            )]
+            result["nights"] = [
+                dict(row)
+                for row in self.store.all(
+                    "SELECT * FROM nights WHERE order_id=? ORDER BY revision,day",
+                    (order_id,),
+                )
+            ]
+            result["events"] = [
+                dict(row)
+                for row in self.store.all(
+                    "SELECT * FROM events WHERE order_id=? ORDER BY id", (order_id,)
+                )
+            ]
             return result

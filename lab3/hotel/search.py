@@ -14,7 +14,9 @@ class Search:
         room = self.catalog.room(room_id)
         if not room["enabled"] or not room["hotel_enabled"]:
             raise BusinessError("unavailable", "酒店或房型已停用")
-        if self.catalog.blocked(room["hotel_id"], room_id, stay.arrival, stay.departure):
+        if self.catalog.blocked(
+            room["hotel_id"], room_id, stay.arrival, stay.departure
+        ):
             raise BusinessError("closed", "住宿日期包含停业时段")
         if stay.people > room["capacity"] * stay.quantity:
             raise BusinessError("capacity", "人数超过预订房间总容量")
@@ -26,14 +28,22 @@ class Search:
         for row in rows:
             credit = 0
             if (
-                prior and prior["room_id"] == room_id
+                prior
+                and prior["room_id"] == room_id
                 and prior["arrival"] <= row["day"] < prior["departure"]
             ):
                 credit = prior["quantity"]
-            if row["stopped"] or row["total"] - row["occupied"] + credit < stay.quantity:
+            if (
+                row["stopped"]
+                or row["total"] - row["occupied"] + credit < stay.quantity
+            ):
                 raise BusinessError("unavailable", f"{row['day']} 停售或库存不足")
         return Quote(
-            room["hotel_id"], room_id, room["hotel_name"], room["name"], stay,
+            room["hotel_id"],
+            room_id,
+            room["hotel_name"],
+            room["name"],
+            stay,
             tuple((row["day"], row["price"]) for row in rows),
         )
 

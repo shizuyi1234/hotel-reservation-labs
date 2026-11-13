@@ -20,7 +20,9 @@ class Application:
         self.accounts = Accounts(self.store, clock)
         self.catalog = Catalog(self.store, self.accounts, clock)
         self.search = Search(self.store, self.catalog, clock)
-        self.orders = Orders(self.store, self.accounts, self.catalog, self.search, clock)
+        self.orders = Orders(
+            self.store, self.accounts, self.catalog, self.search, clock
+        )
         self.queries = Queries(self.store, self.accounts, self.orders, clock)
         with self.store.transaction():
             self.queries.prune()

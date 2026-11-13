@@ -44,7 +44,9 @@ class Accounts:
             if self.store.one("SELECT 1 FROM accounts WHERE role='admin'"):
                 raise BusinessError("initialized", "管理员已初始化")
             actor = self._create(username, password, "admin")
-            self.store.log(actor, None, timestamp(self.clock()), "bootstrap", str(actor))
+            self.store.log(
+                actor, None, timestamp(self.clock()), "bootstrap", str(actor)
+            )
             return actor
 
     def register(self, username, password):
@@ -57,9 +59,7 @@ class Accounts:
         username = required(username, "账号", 40).lower()
         if not isinstance(password, str) or not 1 <= len(password) <= 128:
             raise BusinessError("login", "登录失败")
-        account = self.store.one(
-            "SELECT * FROM accounts WHERE username=?", (username,)
-        )
+        account = self.store.one("SELECT * FROM accounts WHERE username=?", (username,))
         salt = account["salt"] if account else "0" * 32
         digest = password_digest(password, salt)
         expected = account["digest"] if account else "0" * 64
@@ -96,12 +96,15 @@ class Accounts:
 
     def admin_list(self, token):
         self.require(token, "admin")
-        return [dict(row) for row in self.store.all(
-            """SELECT a.id,a.username,a.role,a.enabled,
+        return [
+            dict(row)
+            for row in self.store.all(
+                """SELECT a.id,a.username,a.role,a.enabled,
                       GROUP_CONCAT(g.hotel_id) AS hotels
                FROM accounts a LEFT JOIN grants g ON g.user_id=a.id
                GROUP BY a.id ORDER BY a.id"""
-        )]
+            )
+        ]
 
     def assign(self, token, username, role, hotel=None):
         with self.store.transaction():
@@ -126,11 +129,20 @@ class Accounts:
                 )
             else:
                 hotel = None
-                self.store.execute("DELETE FROM grants WHERE user_id=?", (target["id"],))
-            self.store.execute("UPDATE accounts SET role=? WHERE id=?", (role, target["id"]))
+                self.store.execute(
+                    "DELETE FROM grants WHERE user_id=?", (target["id"],)
+                )
+            self.store.execute(
+                "UPDATE accounts SET role=? WHERE id=?", (role, target["id"])
+            )
             self.store.log(
-                actor["id"], hotel, timestamp(self.clock()), "assign",
-                str(target["id"]), before=target["role"], after=role,
+                actor["id"],
+                hotel,
+                timestamp(self.clock()),
+                "assign",
+                str(target["id"]),
+                before=target["role"],
+                after=role,
             )
 
     def revoke(self, token, user_id, hotel):
@@ -142,21 +154,35 @@ class Accounts:
             if not removed.rowcount:
                 raise BusinessError("not_found", "该授权不存在")
             self.store.log(
-                actor["id"], hotel, timestamp(self.clock()), "revoke",
-                str(user_id), before="granted", after="revoked",
+                actor["id"],
+                hotel,
+                timestamp(self.clock()),
+                "revoke",
+                str(user_id),
+                before="granted",
+                after="revoked",
             )
 
     def set_enabled(self, token, user_id, enabled):
         with self.store.transaction():
             actor = self.require(token, "admin")
             enabled = flag(enabled, "账号状态")
-            target = self.store.one("SELECT enabled FROM accounts WHERE id=?", (user_id,))
+            target = self.store.one(
+                "SELECT enabled FROM accounts WHERE id=?", (user_id,)
+            )
             if not target:
                 raise BusinessError("not_found", "账号不存在")
             if actor["id"] == user_id and not enabled:
                 raise BusinessError("invalid", "不能停用当前管理员")
-            self.store.execute("UPDATE accounts SET enabled=? WHERE id=?", (enabled, user_id))
+            self.store.execute(
+                "UPDATE accounts SET enabled=? WHERE id=?", (enabled, user_id)
+            )
             self.store.log(
-                actor["id"], None, timestamp(self.clock()), "account_status", str(user_id),
-                before=str(target["enabled"]), after=str(enabled),
+                actor["id"],
+                None,
+                timestamp(self.clock()),
+                "account_status",
+                str(user_id),
+                before=str(target["enabled"]),
+                after=str(enabled),
             )

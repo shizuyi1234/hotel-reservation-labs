@@ -52,8 +52,16 @@ class Store:
             self.execute("RELEASE business_action")
 
     def log(
-        self, actor, hotel, at, action, target, result="ok",
-        detail="", before=None, after=None,
+        self,
+        actor,
+        hotel,
+        at,
+        action,
+        target,
+        result="ok",
+        detail="",
+        before=None,
+        after=None,
     ):
         self.execute(
             """INSERT INTO audit(actor_id,hotel_id,at,action,target,

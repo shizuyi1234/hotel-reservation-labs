@@ -1,5 +1,7 @@
 """Hotel configuration, inventory, search, and restrictions."""
 
+from datetime import timedelta
+
 from .domain import BusinessError, flag, integer, parse_day, required, timestamp
 
 
@@ -27,19 +29,25 @@ class Catalog:
 
     def hotels(self, token):
         actor = self.accounts.require(token, "admin", "staff")
-        return [dict(row) for row in self.store.all(
-            """SELECT h.* FROM hotels h WHERE ?='admin' OR EXISTS(
+        return [
+            dict(row)
+            for row in self.store.all(
+                """SELECT h.* FROM hotels h WHERE ?='admin' OR EXISTS(
                    SELECT 1 FROM grants g WHERE g.hotel_id=h.id AND g.user_id=?)
                ORDER BY h.id""",
-            (actor["role"], actor["id"]),
-        )]
+                (actor["role"], actor["id"]),
+            )
+        ]
 
     def rooms(self, token, hotel_id):
         actor = self.accounts.require(token, "admin", "staff")
         self.accounts.require_hotel(actor, hotel_id)
-        return [dict(row) for row in self.store.all(
-            "SELECT * FROM rooms WHERE hotel_id=? ORDER BY id", (hotel_id,)
-        )]
+        return [
+            dict(row)
+            for row in self.store.all(
+                "SELECT * FROM rooms WHERE hotel_id=? ORDER BY id", (hotel_id,)
+            )
+        ]
 
     def save_hotel(self, token, name, city, address, contact, hotel_id=None):
         with self.store.transaction():
@@ -86,15 +94,20 @@ class Catalog:
                     (*values, hotel_id),
                 ).lastrowid
             else:
-                self.accounts.require_hotel(actor, self.room(room_id)["hotel_id"])
-                if self.room(room_id)["hotel_id"] != hotel_id:
+                old_hotel = self.room(room_id)["hotel_id"]
+                self.accounts.require_hotel(actor, old_hotel)
+                if old_hotel != hotel_id:
                     raise BusinessError("invalid", "房型不能迁移酒店")
                 self.store.execute(
                     "UPDATE rooms SET name=?,description=?,capacity=? WHERE id=?",
                     (*values, room_id),
                 )
             self.store.log(
-                actor["id"], hotel_id, timestamp(self.clock()), "save_room", str(room_id)
+                actor["id"],
+                hotel_id,
+                timestamp(self.clock()),
+                "save_room",
+                str(room_id),
             )
             return room_id
 
@@ -104,10 +117,17 @@ class Catalog:
             room = self.room(room_id)
             self.accounts.require_hotel(actor, room["hotel_id"])
             enabled = flag(enabled, "房型状态")
-            self.store.execute("UPDATE rooms SET enabled=? WHERE id=?", (enabled, room_id))
+            self.store.execute(
+                "UPDATE rooms SET enabled=? WHERE id=?", (enabled, room_id)
+            )
             self.store.log(
-                actor["id"], room["hotel_id"], timestamp(self.clock()), "room_status",
-                str(room_id), before=str(room["enabled"]), after=str(enabled),
+                actor["id"],
+                room["hotel_id"],
+                timestamp(self.clock()),
+                "room_status",
+                str(room_id),
+                before=str(room["enabled"]),
+                after=str(enabled),
             )
 
     def stock(self, room_id, first, end, at):
@@ -142,8 +162,6 @@ class Catalog:
             raise BusinessError("date", "结束日期必须晚于开始日期")
 
     def save_inventory(self, token, room_id, day, total, price, stopped=False):
-        from datetime import timedelta
-
         with self.store.transaction():
             actor = self.accounts.require(token, "staff")
             room = self.room(room_id)
@@ -171,10 +189,17 @@ class Catalog:
             if stopped:
                 self._open_cases(hotel, day, end, f"stock:{room_id}:{day}", at, room_id)
             before = self._stock_summary(old) if old else None
-            after = self._stock_summary({"total": total, "price": price, "stopped": stopped})
+            after = self._stock_summary(
+                {"total": total, "price": price, "stopped": stopped}
+            )
             self.store.log(
-                actor["id"], hotel, at, "save_inventory", f"{room_id}:{day}",
-                before=before, after=after,
+                actor["id"],
+                hotel,
+                at,
+                "save_inventory",
+                f"{room_id}:{day}",
+                before=before,
+                after=after,
             )
 
     @staticmethod
@@ -199,11 +224,15 @@ class Catalog:
         )
         if hotel_closed:
             return True
-        return for_existing and self.store.one(
-            """SELECT 1 FROM inventory WHERE room_id=? AND day>=? AND day<?
+        return (
+            for_existing
+            and self.store.one(
+                """SELECT 1 FROM inventory WHERE room_id=? AND day>=? AND day<?
                AND stopped=1 LIMIT 1""",
-            (room, first, end),
-        ) is not None
+                (room, first, end),
+            )
+            is not None
+        )
 
     def close_hotel(self, token, hotel, first, end, reason):
         with self.store.transaction():
@@ -222,39 +251,57 @@ class Catalog:
             ).lastrowid
             self._open_cases(hotel, first, end, f"closure:{closure}", at)
             self.store.log(
-                actor["id"], hotel, at, "close_hotel", str(closure),
-                detail=reason, after="closed",
+                actor["id"],
+                hotel,
+                at,
+                "close_hotel",
+                str(closure),
+                detail=reason,
+                after="closed",
             )
             return closure
 
     def closures(self, token, hotel):
         actor = self.accounts.require(token, "admin", "staff")
         self.accounts.require_hotel(actor, hotel)
-        return [dict(row) for row in self.store.all(
-            "SELECT * FROM closures WHERE hotel_id=? ORDER BY id DESC", (hotel,)
-        )]
+        return [
+            dict(row)
+            for row in self.store.all(
+                "SELECT * FROM closures WHERE hotel_id=? ORDER BY id DESC", (hotel,)
+            )
+        ]
 
     def reopen_hotel(self, token, closure):
         with self.store.transaction():
             actor = self.accounts.require(token, "admin")
-            row = self.store.one("SELECT * FROM closures WHERE id=? AND active=1", (closure,))
+            row = self.store.one(
+                "SELECT * FROM closures WHERE id=? AND active=1", (closure,)
+            )
             if not row:
                 raise BusinessError("not_found", "没有该项有效停业限制")
             self.store.execute("UPDATE closures SET active=0 WHERE id=?", (closure,))
             self.store.log(
-                actor["id"], row["hotel_id"], timestamp(self.clock()), "reopen_hotel",
-                str(closure), before="closed", after="reopened",
+                actor["id"],
+                row["hotel_id"],
+                timestamp(self.clock()),
+                "reopen_hotel",
+                str(closure),
+                before="closed",
+                after="reopened",
             )
 
     def cases(self, token, hotel, open_only=True):
         actor = self.accounts.require(token, "staff", "admin")
         self.accounts.require_hotel(actor, hotel)
-        return [dict(row) for row in self.store.all(
-            """SELECT c.*,o.status,o.version,o.arrival,o.departure
+        return [
+            dict(row)
+            for row in self.store.all(
+                """SELECT c.*,o.status,o.version,o.arrival,o.departure
                FROM cases c JOIN orders o ON o.id=c.order_id
                WHERE o.hotel_id=? AND (?=0 OR c.resolved_at IS NULL) ORDER BY c.id""",
-            (hotel, int(open_only)),
-        )]
+                (hotel, int(open_only)),
+            )
+        ]
 
     def resolve_case(self, token, case, contact, decision):
         with self.store.transaction():
@@ -278,6 +325,11 @@ class Catalog:
                 (at, actor["id"], contact, decision, case),
             )
             self.store.log(
-                actor["id"], row["hotel_id"], at, "resolve_case", str(case),
-                before="open", after="resolved",
+                actor["id"],
+                row["hotel_id"],
+                at,
+                "resolve_case",
+                str(case),
+                before="open",
+                after="resolved",
             )

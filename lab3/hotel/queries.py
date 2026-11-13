@@ -2,7 +2,7 @@
 
 from datetime import timedelta
 
-from .domain import BusinessError, STATUS_LABELS, parse_day, timestamp
+from .domain import STATUS_LABELS, BusinessError, parse_day, timestamp
 
 
 class Queries:
@@ -43,8 +43,16 @@ class Queries:
             values.append(value)
 
     def list_orders(
-        self, token, hotel=None, order_id=None, room=None, status=None,
-        created_from=None, created_to=None, stay_from=None, stay_to=None,
+        self,
+        token,
+        hotel=None,
+        order_id=None,
+        room=None,
+        status=None,
+        created_from=None,
+        created_to=None,
+        stay_from=None,
+        stay_to=None,
     ):
         self._date_range(created_from, created_to, "创建时间")
         self._date_range(stay_from, stay_to, "住宿日期")
@@ -69,13 +77,16 @@ class Queries:
             for condition, value in filters:
                 self._add(clauses, values, condition, value)
             where = " AND ".join(clauses)
-            return [dict(row) for row in self.store.all(
-                f"""SELECT o.id,o.hotel_id,o.hotel_name,o.room_id,o.room_name,
+            return [
+                dict(row)
+                for row in self.store.all(
+                    f"""SELECT o.id,o.hotel_id,o.hotel_name,o.room_id,o.room_name,
                            o.arrival,o.departure,o.quantity,o.status,o.version,
                            o.total,o.created_at,o.deadline
                     FROM orders o WHERE {where} ORDER BY o.created_at DESC,o.id DESC""",
-                values,
-            )]
+                    values,
+                )
+            ]
 
     def statistics(self, token, first, end, hotel=None, room=None, include_rows=False):
         self._date_range(first, end, "统计日期")
@@ -119,8 +130,14 @@ class Queries:
             return report
 
     def audit(
-        self, token, hotel=None, actor_id=None, target=None, result=None,
-        first=None, end=None,
+        self,
+        token,
+        hotel=None,
+        actor_id=None,
+        target=None,
+        result=None,
+        first=None,
+        end=None,
     ):
         self._date_range(first, end, "日志日期")
         with self.store.transaction():
@@ -138,10 +155,13 @@ class Queries:
             for condition, value in filters:
                 self._add(clauses, values, condition, value)
             where = " AND ".join(clauses)
-            return [dict(row) for row in self.store.all(
-                f"SELECT o.* FROM audit o WHERE {where} ORDER BY o.at DESC,o.id DESC",
-                values,
-            )]
+            return [
+                dict(row)
+                for row in self.store.all(
+                    f"SELECT o.* FROM audit o WHERE {where} ORDER BY o.at DESC,o.id DESC",
+                    values,
+                )
+            ]
 
     def prune(self):
         cutoff = timestamp(self.clock() - timedelta(days=180))
