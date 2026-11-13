@@ -13,3 +13,7 @@ demo: build
 
 run: build
 	$(PYTHON) -m hotel
+
+.PHONY: web
+web: build
+	$(PYTHON) -m hotel.web
